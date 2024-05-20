@@ -4,7 +4,7 @@ import os
 from homeassistant_api import Client
 
 async def turn_off_devices_in_zone():
-    # Home Assistant API URL and Token
+    # Home Assistant API URL und Token
     hass_url = os.environ['HASS_URL']
     hass_token = os.environ['HASS_TOKEN']
 
@@ -17,7 +17,7 @@ async def turn_off_devices_in_zone():
 
     include_zones = config.get('include_zones', [])
     include_domains = config.get('include_domains', ['all'])
-    dependencies = config.get('dependencies', {})
+    dependencies = config.get('dependencies', [])
     exclude_identifiers = config.get('exclude_identifiers', [])
     exclude_entities = config.get('exclude_entities', [])
     max_retries = config.get('max_retries', 30)
@@ -72,7 +72,8 @@ async def turn_off_devices_in_zone():
 
         for device in devices_in_zone:
             if client.states.get(device).state == 'on':
-                device_dependencies = dependencies.get(device, [])
+                # Find the dependency configuration for this device
+                device_dependencies = next((dep['dependencies'] for dep in dependencies if dep['device_id'] == device), [])
                 can_turn_off = True
 
                 for dep in device_dependencies:
@@ -92,8 +93,8 @@ async def turn_off_devices_in_zone():
                     continue
 
                 # Handle delay for dependent devices
-                if device in dependencies:
-                    for dep in dependencies[device]:
+                if device_dependencies:
+                    for dep in device_dependencies:
                         delay = dep.get('delay', 0)
                         if delay > 0:
                             await asyncio.sleep(delay)

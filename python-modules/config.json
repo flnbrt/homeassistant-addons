@@ -11,16 +11,22 @@
   "options": {
     "include_zones": ["Living Room"],
     "include_domains": ["light", "switch"],
-    "dependencies": {
-      "switch.pc_outlet": [
-        {"entity_id": "switch.pc", "delay": 5},
-        {"entity_id": "device_tracker.pc_tracker", "delay": 10},
-        {"entity_id": "sensor.pc_temperature"}
-      ],
-      "light.strip": [
-        {"entity_id": "switch.pc_outlet"}
-      ]
-    },
+    "dependencies": [
+      {
+        "device_id": "switch.pc_outlet",
+        "dependencies": [
+          {"entity_id": "switch.pc", "delay": 5},
+          {"entity_id": "device_tracker.pc_tracker", "delay": 10},
+          {"entity_id": "sensor.pc_temperature"}
+        ]
+      },
+      {
+        "device_id": "light.strip",
+        "dependencies": [
+          {"entity_id": "switch.pc_outlet"}
+        ]
+      }
+    ],
     "exclude_identifiers": ["browser_mod"],
     "exclude_entities": ["switch.eve_energy_lock"],
     "max_retries": 12,
@@ -29,13 +35,17 @@
   "schema": {
     "include_zones": ["str"],
     "include_domains": ["str"],
-    "dependencies": {
-      "type": "dict",
-      "keys": {
-        "entity_id": "str",
-        "delay": "int"
+    "dependencies": [
+      {
+        "device_id": "str",
+        "dependencies": [
+          {
+            "entity_id": "str",
+            "delay": "int?"
+          }
+        ]
       }
-    },
+    ],
     "exclude_identifiers": ["str"],
     "exclude_entities": ["str"],
     "max_retries": "int",
