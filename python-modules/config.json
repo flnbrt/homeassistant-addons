@@ -40,26 +40,40 @@
   "schema": {
     "include_zones": {
       "type": "list",
-      "items": "str"
+      "items": {
+        "type": "str"
+      }
     },
     "include_domains": {
       "type": "list",
-      "items": "str"
+      "items": {
+        "type": "str"
+      }
     },
     "dependencies": {
       "type": "list",
-      "items": "str"
+      "items": {
+        "type": "str"
+      }
     },
     "exclude_identifiers": {
       "type": "list",
-      "items": "str"
+      "items": {
+        "type": "str"
+      }
     },
     "exclude_entities": {
       "type": "list",
-      "items": "str"
+      "items": {
+        "type": "str"
+      }
     },
-    "max_retries": "int",
-    "retry_interval": "int"
+    "max_retries": {
+      "type": "int"
+    },
+    "retry_interval": {
+      "type": "int"
+    }
   },
   "privileged": [
     "SYS_ADMIN",
