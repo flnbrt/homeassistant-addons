@@ -10,11 +10,41 @@ arch:
   - aarch64
   - amd64
   - i386
-init: false
-map:
-  - share:rw
+startup: "services"
+boot: "auto"
+hassio_api: true
+homeassistant_api: true
 options:
-  message: "Hello world..."
+  include_zones:
+    - "Living Room"
+  include_domains:
+    - "light"
+    - "switch"
+  dependencies:
+    switch.pc_outlet:
+      - entity_id: "switch.pc"
+        delay: 5
+      - entity_id: "device_tracker.pc_tracker"
+        delay: 10
+      - entity_id: "sensor.pc_temperature"
+    light.strip:
+      - entity_id: "switch.pc_outlet"
+  exclude_identifiers:
+    - "browser_mod"
+  exclude_entities:
+    - "switch.eve_energy_lock"
+  max_retries: 12
+  retry_interval: 10
 schema:
-  message: "str?"
-image: "ghcr.io/home-assistant/{arch}-addon-example"
+  include_zones:
+    - "str"
+  include_domains:
+    - "str"
+  dependencies:
+    type: "dict"
+  exclude_identifiers:
+    - "str"
+  exclude_entities:
+    - "str"
+  max_retries: "int"
+  retry_interval: "int"

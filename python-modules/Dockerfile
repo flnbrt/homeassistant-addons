@@ -1,12 +1,9 @@
-# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-dockerfile
-ARG BUILD_FROM
-FROM $BUILD_FROM
+FROM python:3.12-slim
 
-# Execute during the build of the image
-ARG TEMPIO_VERSION BUILD_ARCH
-RUN \
-    curl -sSLf -o /usr/bin/tempio \
-    "https://github.com/home-assistant/tempio/releases/download/${TEMPIO_VERSION}/tempio_${BUILD_ARCH}"
+RUN pip install homeassistant
+RUN mkdir /app
+COPY run.sh /app/run.sh
+COPY script.py /app/script.py
+RUN chmod +x /app/run.sh
 
-# Copy root filesystem
-COPY rootfs /
+CMD [ "/app/run.sh" ]
