@@ -34,6 +34,10 @@ async def turn_off_devices_in_zone():
     hass_url = os.environ['SUPERVISOR_API']
     hass_token = os.environ['SUPERVISOR_TOKEN']
 
+    # DEBUG: Print env for supervisor
+    print("SUPERVISOR_API:", os.getenv('SUPERVISOR_API'))
+    print("SUPERVISOR_TOKEN:", os.getenv('SUPERVISOR_TOKEN'))
+
     # Create a Home Assistant API client
     client = Client(hass_url, hass_token)
 
