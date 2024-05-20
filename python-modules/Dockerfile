@@ -6,4 +6,4 @@ COPY run.sh /python_modules/run.sh
 COPY turn_off_devices_in_zone.py /python_modules/turn_off_devices_in_zone.py
 RUN chmod +x /python_modules/run.sh
 
-CMD [ "/app/run.sh" ]
+CMD [ "/python_modules/run.sh" ]
