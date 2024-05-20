@@ -1,4 +1,4 @@
 # https://developers.home-assistant.io/docs/add-ons/repository#repository-configuration
-name: Home Assistant add-on repository - flnbrt
+name: 'Home Assistant Add-on repository: flnbrt'
 url: 'https://github.com/flnbrt/homeassistant-addons'
-maintainer: flnbrt <https://github.com/flnbrt>
+maintainer: 'flnbrt <https://github.com/flnbrt>'
