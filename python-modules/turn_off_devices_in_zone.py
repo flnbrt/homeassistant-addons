@@ -4,14 +4,7 @@ import os
 from homeassistant_api import Client
 
 async def turn_off_devices_in_zone():
-    # Home Assistant API URL und Token
-    hass_url = os.environ['HASS_URL']
-    hass_token = os.environ['HASS_TOKEN']
-
-    # Create a Home Assistant API client
-    client = Client(hass_url, hass_token)
-
-    # Load options from config
+    # Lade Optionen aus der Datei options.json
     with open('/data/options.json') as f:
         config = json.load(f)
 
@@ -36,6 +29,13 @@ async def turn_off_devices_in_zone():
         if device_id not in dependencies:
             dependencies[device_id] = []
         dependencies[device_id].append({'entity_id': entity_id, 'delay': delay})
+
+    # Home Assistant API URL und Token aus Umgebungsvariablen
+    hass_url = os.environ['SUPERVISOR_API']
+    hass_token = os.environ['SUPERVISOR_TOKEN']
+
+    # Create a Home Assistant API client
+    client = Client(hass_url, hass_token)
 
     entity_registry = await client.async_get_entity_registry()
     device_registry = await client.async_get_device_registry()

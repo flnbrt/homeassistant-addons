@@ -1,9 +1,15 @@
 {
   "name": "Turn Off Devices In Zone",
-  "version": "1.0",
+  "version": "1.0-alpha-1",
   "slug": "turn_off_devices_in_zone",
   "description": "An add-on to turn off devices in specified zones with dependencies",
-  "arch": ["armv7", "armhf", "aarch64", "amd64", "i386"],
+  "arch": [
+    "armv7",
+    "armhf",
+    "aarch64",
+    "amd64",
+    "i386"
+  ],
   "startup": "services",
   "boot": "auto",
   "hassio_api": true,
@@ -12,10 +18,9 @@
     "include_zones": ["Living Room"],
     "include_domains": ["light", "switch"],
     "dependencies": [
-      "switch.pc_outlet:switch.pc:5",
-      "switch.pc_outlet:device_tracker.pc_tracker:10",
-      "switch.pc_outlet:sensor.pc_temperature",
-      "light.strip:switch.pc_outlet"
+      {"entity_id": "switch.pc_outlet", "dependencies": [{"entity_id": "switch.pc", "delay": 5}, {"entity_id": "device_tracker.pc_tracker", "delay": 10}]},
+      {"entity_id": "light.strip", "dependencies": [{"entity_id": "switch.pc_outlet"}]},
+      {"entity_id": "light.stehlampe_light", "dependencies": [{"entity_id": "switch.pc_outlet"}]}
     ],
     "exclude_identifiers": ["browser_mod"],
     "exclude_entities": ["switch.eve_energy_lock"],
@@ -25,10 +30,26 @@
   "schema": {
     "include_zones": ["str"],
     "include_domains": ["str"],
-    "dependencies": ["str"],
+    "dependencies": [
+      {
+        "entity_id": "str",
+        "dependencies": [
+          {
+            "entity_id": "str",
+            "delay": "int?"
+          }
+        ]
+      }
+    ],
     "exclude_identifiers": ["str"],
     "exclude_entities": ["str"],
     "max_retries": "int",
     "retry_interval": "int"
-  }
+  },
+  "privileged": [
+    "SYS_ADMIN",
+    "NET_ADMIN",
+    "SYS_TIME"
+  ],
+  "full_access": true
 }
