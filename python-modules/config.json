@@ -44,23 +44,33 @@
     "retry_interval": 10
   },
   "schema": {
-    "include_zones": ["str"],
-    "include_domains": ["str"],
-    "dependencies": [
-      {
-        "entity_id": "str",
-        "dependencies": [
-          {
-            "entity_id": "str",
-            "delay": "int"
+    "include_zones": ["string"],
+    "include_domains": ["string"],
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "entity_id": {"type": "string"},
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "entity_id": {"type": "string"},
+                "delay": {"type": "integer"}
+              },
+              "required": ["entity_id"]
+            }
           }
-        ]
+        },
+        "required": ["entity_id", "dependencies"]
       }
-    ],
-    "exclude_identifiers": ["str"],
-    "exclude_entities": ["str"],
-    "max_retries": "int",
-    "retry_interval": "int"
+    },
+    "exclude_identifiers": {"type": "array", "items": {"type": "string"}},
+    "exclude_entities": {"type": "array", "items": {"type": "string"}},
+    "max_retries": {"type": "integer"},
+    "retry_interval": {"type": "integer"}
   },
   "privileged": [
     "SYS_ADMIN",
