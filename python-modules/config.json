@@ -44,33 +44,43 @@
     "retry_interval": 10
   },
   "schema": {
-    "include_zones": ["string"],
-    "include_domains": ["string"],
+    "include_zones": {
+      "type": "list",
+      "items": "str"
+    },
+    "include_domains": {
+      "type": "list",
+      "items": "str"
+    },
     "dependencies": {
-      "type": "array",
+      "type": "list",
       "items": {
-        "type": "object",
-        "properties": {
-          "entity_id": {"type": "string"},
+        "type": "dict",
+        "schema": {
+          "entity_id": "str",
           "dependencies": {
-            "type": "array",
+            "type": "list",
             "items": {
-              "type": "object",
-              "properties": {
-                "entity_id": {"type": "string"},
-                "delay": {"type": "integer"}
-              },
-              "required": ["entity_id"]
+              "type": "dict",
+              "schema": {
+                "entity_id": "str",
+                "delay": "int?"
+              }
             }
           }
-        },
-        "required": ["entity_id", "dependencies"]
+        }
       }
     },
-    "exclude_identifiers": {"type": "array", "items": {"type": "string"}},
-    "exclude_entities": {"type": "array", "items": {"type": "string"}},
-    "max_retries": {"type": "integer"},
-    "retry_interval": {"type": "integer"}
+    "exclude_identifiers": {
+      "type": "list",
+      "items": "str"
+    },
+    "exclude_entities": {
+      "type": "list",
+      "items": "str"
+    },
+    "max_retries": "int",
+    "retry_interval": "int"
   },
   "privileged": [
     "SYS_ADMIN",
