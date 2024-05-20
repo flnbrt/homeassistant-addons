@@ -38,11 +38,26 @@
     "retry_interval": 10
   },
   "schema": {
-    "include_zones": "*",
-    "include_domains": "*",
-    "dependencies": "*",
-    "exclude_identifiers": "*",
-    "exclude_entities": "*",
+    "include_zones": {
+      "type": "list",
+      "items": "str"
+    },
+    "include_domains": {
+      "type": "list",
+      "items": "str"
+    },
+    "dependencies": {
+      "type": "list",
+      "items": "str"
+    },
+    "exclude_identifiers": {
+      "type": "list",
+      "items": "str"
+    },
+    "exclude_entities": {
+      "type": "list",
+      "items": "str"
+    },
     "max_retries": "int",
     "retry_interval": "int"
   },
