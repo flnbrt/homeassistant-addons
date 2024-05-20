@@ -1,91 +1,44 @@
-{
-  "name": "Turn Off Devices In Zone",
-  "version": "1.0",
-  "slug": "turn_off_devices_in_zone",
-  "description": "An add-on to turn off devices in specified zones with dependencies",
-  "arch": [
-    "armv7",
-    "armhf",
-    "aarch64",
-    "amd64",
-    "i386"
-  ],
-  "startup": "services",
-  "boot": "auto",
-  "hassio_api": true,
-  "homeassistant_api": true,
-  "options": {
-    "include_zones": ["Living Room"],
-    "include_domains": ["light", "switch"],
-    "dependencies": [
-      {
-        "entity_id": "switch.pc_outlet",
-        "dependencies": [
-          {"entity_id": "switch.pc", "delay": 5},
-          {"entity_id": "device_tracker.pc_tracker", "delay": 10}
-        ]
-      },
-      {
-        "entity_id": "light.strip",
-        "dependencies": [
-          {"entity_id": "switch.pc_outlet"}
-        ]
-      },
-      {
-        "entity_id": "light.stehlampe_light",
-        "dependencies": [
-          {"entity_id": "switch.pc_outlet"}
-        ]
-      }
-    ],
-    "exclude_identifiers": ["browser_mod"],
-    "exclude_entities": ["switch.eve_energy_lock"],
-    "max_retries": 12,
-    "retry_interval": 10
-  },
-  "schema": {
-    "include_zones": {
-      "type": "list",
-      "items": "str"
-    },
-    "include_domains": {
-      "type": "list",
-      "items": "str"
-    },
-    "dependencies": {
-      "type": "list",
-      "items": {
-        "type": "dict",
-        "schema": {
-          "entity_id": "str",
-          "dependencies": {
-            "type": "list",
-            "items": {
-              "type": "dict",
-              "schema": {
-                "entity_id": "str",
-                "delay": "int?"
-              }
-            }
-          }
-        }
-      }
-    },
-    "exclude_identifiers": {
-      "type": "list",
-      "items": "str"
-    },
-    "exclude_entities": {
-      "type": "list",
-      "items": "str"
-    },
-    "max_retries": "int",
-    "retry_interval": "int"
-  },
-  "privileged": [
-    "SYS_ADMIN",
-    "NET_ADMIN",
-    "SYS_TIME"
-  ],
-  "full_access": true
-}
+name: "Turn Off Devices In Zone"
+version: "1.0"
+slug: "turn_off_devices_in_zone"
+description: "An add-on to turn off devices in specified zones with dependencies"
+arch:
+  - armv7
+  - armhf
+  - aarch64
+  - amd64
+  - i386
+startup: "services"
+boot: "auto"
+hassio_api: true
+homeassistant_api: true
+options:
+  include_zones:
+    - Living Room
+  include_domains:
+    - light
+    - switch
+  dependencies:
+    - switch.pc_outlet:switch.pc:5
+    - switch.pc_outlet:device_tracker.pc_tracker:10
+    - switch.pc_outlet:sensor.pc_temperature
+    - light.strip:switch.pc_outlet
+  exclude_identifiers:
+    - browser_mod
+  exclude_entities:
+    - switch.eve_energy_lock
+  max_retries: 12
+  retry_interval: 10
+schema:
+  include_zones: "*"
+  include_domains: "*"
+  dependencies: "*"
+  exclude_identifiers: "*"
+  exclude_entities: "*"
+  max_retries: int
+  retry_interval: int
+privileged:
+  - "SYS_ADMIN"
+  - "NET_ADMIN"
+  - "SYS_TIME"
+full_access: true
