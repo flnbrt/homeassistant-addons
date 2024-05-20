@@ -17,7 +17,7 @@ async def turn_off_devices_in_zone():
 
     include_zones = config.get('include_zones', [])
     include_domains = config.get('include_domains', ['all'])
-    dependencies = config.get('dependencies', [])
+    raw_dependencies = config.get('dependencies', [])
     exclude_identifiers = config.get('exclude_identifiers', [])
     exclude_entities = config.get('exclude_entities', [])
     max_retries = config.get('max_retries', 30)
@@ -27,6 +27,15 @@ async def turn_off_devices_in_zone():
         domains = ['light', 'switch', 'media_player']
     else:
         domains = include_domains
+
+    # Parse dependencies
+    dependencies = {}
+    for dep in raw_dependencies:
+        device_id, entity_id, *delay = dep.split(':')
+        delay = int(delay[0]) if delay else 0
+        if device_id not in dependencies:
+            dependencies[device_id] = []
+        dependencies[device_id].append({'entity_id': entity_id, 'delay': delay})
 
     entity_registry = await client.async_get_entity_registry()
     device_registry = await client.async_get_device_registry()
@@ -73,7 +82,7 @@ async def turn_off_devices_in_zone():
         for device in devices_in_zone:
             if client.states.get(device).state == 'on':
                 # Find the dependency configuration for this device
-                device_dependencies = next((dep['dependencies'] for dep in dependencies if dep['device_id'] == device), [])
+                device_dependencies = dependencies.get(device, [])
                 can_turn_off = True
 
                 for dep in device_dependencies:
