@@ -1,4 +1,4 @@
-# Example Home Assistant add-on repository: flnbrt
+# Home Assistant add-on repository: flnbrt
 
 Add-on documentation: <https://developers.home-assistant.io/docs/add-ons>
 
