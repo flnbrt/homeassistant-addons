@@ -31,12 +31,17 @@ async def turn_off_devices_in_zone():
         dependencies[device_id].append({'entity_id': entity_id, 'delay': delay})
 
     # Home Assistant API URL und Token aus Umgebungsvariablen
-    hass_url = os.environ['SUPERVISOR_API']
+    hass_url = os.environ.get('SUPERVISOR_API', 'http://supervisor')
     hass_token = os.environ['SUPERVISOR_TOKEN']
 
     # DEBUG: Print env for supervisor
     print("SUPERVISOR_API:", os.getenv('SUPERVISOR_API'))
     print("SUPERVISOR_TOKEN:", os.getenv('SUPERVISOR_TOKEN'))
+
+    headers = {
+        "Authorization": f"Bearer {hass_token}",
+        "Content-Type": "application/json"
+    }
 
     # Create a Home Assistant API client
     client = Client(hass_url, hass_token)
