@@ -8,6 +8,7 @@
   "hassio_api": true,
   "homeassistant_api": true,
   "options": {
+    "log_level": "warning",
     "include_zones": ["Living Room"],
     "include_domains": ["light", "switch"],
     "dependencies": [
@@ -22,6 +23,7 @@
     "retry_interval": 10
   },
   "schema": {
+    "log_level": "list(trace|debug|info|notice|warning|error|fatal)?",
     "include_zones": ["str"],
     "include_domains": ["str"],
     "dependencies": ["str"],

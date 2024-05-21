@@ -1,0 +1,4 @@
+configuration:
+  log_level:
+    name: Log Level
+    description: Describes the Logging Level of all tasks for this add-on.
