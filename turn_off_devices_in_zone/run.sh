@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 /python_modules/turn_off_devices_in_zone.py
+python3 /turn_off_devices_in_zone/turn_off_devices_in_zone.py
