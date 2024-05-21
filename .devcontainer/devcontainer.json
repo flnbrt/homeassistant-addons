@@ -1,23 +1,15 @@
 {
-  "name": "Supervisor dev",
+  "name": "Example devcontainer for add-on repositories",
   "image": "ghcr.io/home-assistant/devcontainer:addons",
+  "appPort": ["7123:8123", "7357:4357"],
+  "postStartCommand": "bash devcontainer_bootstrap",
+  "runArgs": ["-e", "GIT_EDITOR=code --wait", "--privileged"],
   "containerEnv": {
     "WORKSPACE_DIRECTORY": "${containerWorkspaceFolder}"
   },
-  "appPort": ["9123:8123", "7357:4357"],
-  "postCreateCommand": "bash devcontainer_bootstrap",
-  "runArgs": ["-e", "GIT_EDITOR=code --wait", "--privileged"],
   "customizations": {
     "vscode": {
-      "extensions": [
-        "charliermarsh.ruff",
-        "ms-python.pylint",
-        "ms-python.vscode-pylance",
-        "visualstudioexptteam.vscodeintellicode",
-        "redhat.vscode-yaml",
-        "esbenp.prettier-vscode",
-        "GitHub.vscode-pull-request-github"
-      ],
+      "extensions": ["timonwong.shellcheck", "esbenp.prettier-vscode"],
       "settings": {
         "terminal.integrated.profiles.linux": {
           "zsh": {
@@ -28,13 +20,9 @@
         "editor.formatOnPaste": false,
         "editor.formatOnSave": true,
         "editor.formatOnType": true,
-        "files.trimTrailingWhitespace": true,
-        "python.pythonPath": "/usr/local/bin/python3",
-        "[python]": {
-          "editor.defaultFormatter": "charliermarsh.ruff"
-        }
+        "files.trimTrailingWhitespace": true
       }
     }
   },
-  "mounts": ["type=volume,target=/var/lib/docker"]
+  "mounts": [ "type=volume,target=/var/lib/docker" ]
 }
